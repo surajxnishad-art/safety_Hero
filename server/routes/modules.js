@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { db, nowIso, audit } from '../db.js';
+import { requireAuth } from '../auth.js';
 import { riskBand } from '../registry.js';
 import {
   moduleByKey,
@@ -15,6 +16,7 @@ import {
 } from '../util.js';
 
 const router = Router();
+router.use(requireAuth);
 
 const num = (v) => (v === null || v === undefined || v === '' ? null : Number(v));
 const round = (v, d = 2) => (v === null ? null : Math.round(v * 10 ** d) / 10 ** d);

@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { db, getSetting } from '../db.js';
+import { requireAuth } from '../auth.js';
 
 const router = Router();
+router.use(requireAuth);
 const n = (v) => Number(v) || 0;
 const pct = (a, b) => (b > 0 ? Math.round((a / b) * 1000) / 10 : 0);
 
