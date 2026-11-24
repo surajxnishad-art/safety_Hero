@@ -1,24 +1,28 @@
 {
-  "name": "safety_hero",
-  "version": "1.0.0",
-  "description": "Safety Hero Suraj",
-  "main": "index.js",
+  "name": "suraj-safety-hero",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SURAJ SAFETY HERO V2.0 - AI-powered Industrial Safety & HSE Management Platform",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "test": "node tests/api.test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/surajxnishad-art/safety_Hero.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/surajxnishad-art/safety_Hero/issues"
-  },
-  "homepage": "https://github.com/surajxnishad-art/safety_Hero#readme",
   "dependencies": {
-    "better-sqlite3": "^11.10.0"
+    "better-sqlite3": "^11.10.0",
+    "express": "^4.21.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
+    "recharts": "^2.15.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
   }
 }
