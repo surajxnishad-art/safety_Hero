@@ -6,7 +6,7 @@ import { useAuth } from '../lib/auth.jsx';
 
 const money = (v) => (v === null || v === undefined || v === '' ? 'Not disclosed' : String(v));
 
-export default function Jobs() {
+export function Jobs() {
   const [q, setQ] = useState('');
   const [state, setState] = useState('');
   const [category, setCategory] = useState('');
