@@ -78,6 +78,7 @@ export function AuthProvider({ children }) {
       ai: session?.ai || { enabled: false },
       demoData: !!session?.demo_data,
       loading,
+      ready: !loading,
       login,
       register,
       setup,
@@ -102,5 +103,6 @@ export function useTheme() {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('ssh-theme', theme);
   }, [theme]);
-  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))];
+  const toggleTheme = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), []);
+  return { theme, toggleTheme };
 }
