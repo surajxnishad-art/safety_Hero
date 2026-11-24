@@ -45,13 +45,13 @@ app.use('/api', rateLimit({ windowMs: 60_000, max: 900, message: 'Too many reque
 /* --------------------------------- routes --------------------------------- */
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api', publicRoutes);
 app.use('/api/modules', moduleRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api', publicRoutes);
 
 app.get('/api/session', (req, res) => {
   const user = currentUser(req);

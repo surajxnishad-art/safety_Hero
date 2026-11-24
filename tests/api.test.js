@@ -171,15 +171,15 @@ try {
   const update = await api('PATCH', `/api/modules/hira/${newId}`, { control_admin: 'Permit + continuous gas monitoring' });
   check('editing a record persists the change', update.status === 200 && /continuous gas/.test(update.json.row.control_admin));
 
-  const csv = await api('GET', '/api/modules/hira/export.csv');
+  const csv = await api('GET', '/api/modules/hira/export');
   check('CSV export streams module rows', csv.status === 200 && csv.text.includes('Ignition of flammable vapour'));
 
   /* -------------------------------- dashboard ------------------------------ */
   const dash = await api('GET', '/api/dashboard');
   const kpis = dash.json?.kpis || {};
-  check('dashboard returns KPI block', dash.status === 200 && typeof kpis.totalManHours === 'number', JSON.stringify(kpis).slice(0, 200));
-  check('man-hours and LTIFR are computed from stored data', kpis.totalManHours > 0 && typeof kpis.ltifr === 'number');
-  check('dashboard trend series present', Array.isArray(dash.json?.trend) && dash.json.trend.length >= 3);
+  check('dashboard returns KPI block', dash.status === 200 && typeof kpis.man_hours === 'number', JSON.stringify(kpis).slice(0, 200));
+  check('man-hours and LTIFR/TRIR are computed from stored data', kpis.man_hours > 0 && typeof kpis.ltifr === 'number' && typeof kpis.trir === 'number');
+  check('dashboard trend series present', Array.isArray(dash.json?.monthly) && dash.json.monthly.length >= 3);
 
   /* -------------------------------- documents ----------------------------- */
   const templates = await api('GET', '/api/documents/templates');

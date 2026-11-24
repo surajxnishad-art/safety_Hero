@@ -130,10 +130,12 @@ export const requireAdmin = requireRole('super_admin', 'admin');
 /* ---------------- rate limiting (in-memory, per instance) ---------------- */
 
 const buckets = new Map();
+let limiterSeq = 0;
 
 export function rateLimit({ windowMs = 60_000, max = 120, key = (req) => req.ip, message = 'Too many requests. Please slow down.' } = {}) {
+  const scope = `rl${++limiterSeq}`;
   return (req, res, next) => {
-    const bucketKey = `${key(req) || 'anon'}`;
+    const bucketKey = `${scope}:${key(req) || 'anon'}`;
     const now = Date.now();
     let entry = buckets.get(bucketKey);
     if (!entry || entry.reset < now) {

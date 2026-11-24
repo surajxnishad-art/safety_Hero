@@ -519,7 +519,7 @@ export function seedIfEmpty() {
   for (const j of demoJobs) {
     jobStmt.run(
       j[0], j[1], j[2], j[3], j[4], j[5], j[6], j[7], j[8], j[9], j[10], j[11],
-      null, 'its.surajsahani@gmail.com', 'Demo dataset – source not verified. Owner must verify before publishing.', 0, j[12], 'published', j[13], now, now
+      null, 'its.surajsahani@gmail.com', 'Demo dataset – source not verified. Owner must verify before publishing.', 0, j[12], 'published', j[15], now, now
     );
   }
 
