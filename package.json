@@ -1,0 +1,24 @@
+{
+  "name": "safety_hero",
+  "version": "1.0.0",
+  "description": "Safety Hero Suraj",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surajxnishad-art/safety_Hero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/surajxnishad-art/safety_Hero/issues"
+  },
+  "homepage": "https://github.com/surajxnishad-art/safety_Hero#readme",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0"
+  }
+}
