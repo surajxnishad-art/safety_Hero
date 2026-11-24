@@ -124,7 +124,6 @@ export function Progress({ value, tone = '', label }) {
         <i style={{ width: `${pct}%` }} />
       </div>
     </div>
- <｜begin▁of▁sentence｜>
   );
 }
 
