@@ -47,10 +47,10 @@ router.post('/contact', rateLimit({ windowMs: 60 * 60_000, max: 8, message: 'Too
   if (message.length < 10) return res.status(400).json({ error: 'Please describe your enquiry (at least 10 characters)' });
   const info = db
     .prepare(
-      `INSERT INTO contact_enquiries (name, email, phone, subject, message, type, status, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, 'open', ?)`
+      `INSERT INTO contact_enquiries (name, email, phone, subject, enquiry_type, message, status, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, 'new', ?)`
     )
-    .run(name, email, body.phone ? String(body.phone).slice(0, 30) : null, body.subject ? String(body.subject).slice(0, 200) : null, message.slice(0, 5000), type, nowIso());
+    .run(name, email, body.phone ? String(body.phone).slice(0, 30) : null, body.subject ? String(body.subject).slice(0, 200) : null, type, message.slice(0, 5000), nowIso());
   db.prepare(
     `INSERT INTO notifications (role_target, title, body, category, link, severity, created_at)
      VALUES ('hse_staff', ?, ?, 'enquiry', '/admin/enquiries', 'info', ?)`

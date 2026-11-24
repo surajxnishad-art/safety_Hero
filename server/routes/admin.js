@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import fs from 'node:fs';
 import { db, nowIso, getSetting, setSetting, audit, dbPath } from '../db.js';
 import { requireAdmin, hashPassword, publicUser } from '../auth.js';
 import { ROLES, ROLE_LABELS, MODULES } from '../registry.js';
@@ -37,7 +38,7 @@ router.get('/overview', (req, res) => {
     },
     enquiries: {
       total: count('SELECT COUNT(*) c FROM contact_enquiries'),
-      open: count("SELECT COUNT(*) c FROM contact_enquiries WHERE status = 'open'")
+      open: count("SELECT COUNT(*) c FROM contact_enquiries WHERE status IN ('new','in_progress')")
     },
     ai: { ...aiStatus(), conversations: count('SELECT COUNT(*) c FROM ai_conversations') },
     audit: db.prepare('SELECT a.*, u.name AS user_name FROM audit_logs a LEFT JOIN users u ON u.id = a.user_id ORDER BY a.id DESC LIMIT 12').all(),
@@ -47,7 +48,7 @@ router.get('/overview', (req, res) => {
       demo_data: getSetting('demo_data', '0'),
       ai_enabled: getSetting('ai_enabled', '1')
     },
-    db: { path: dbPath, size_kb: Math.round(require('node:fs').statSync(dbPath).size / 1024) }
+    db: { path: dbPath, size_kb: Math.round(fs.statSync(dbPath).size / 1024) }
   });
 });
 
@@ -217,7 +218,7 @@ router.get('/enquiries', (req, res) => {
 
 router.patch('/enquiries/:id', (req, res) => {
   const status = String((req.body || {}).status || '');
-  if (!['open', 'in_progress', 'closed'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
+  if (!['new', 'in_progress', 'closed'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
   db.prepare('UPDATE contact_enquiries SET status = ? WHERE id = ?').run(status, Number(req.params.id));
   audit(req.user, 'enquiry.update', 'contact_enquiries', req.params.id, `Status ${status}`, req.ip);
   res.json({ ok: true });
